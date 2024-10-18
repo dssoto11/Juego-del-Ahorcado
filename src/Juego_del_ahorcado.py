@@ -1,4 +1,4 @@
-"""Archivo main del proyecto de Juego del Ahorcado con interfaz grafica """
+"""Archivo main del proyecto de Juego del Ahorcado """
 import random
 
 #lista de palabras secretas
