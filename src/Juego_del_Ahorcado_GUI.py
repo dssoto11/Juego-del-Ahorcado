@@ -21,7 +21,7 @@ class HangmanGame:
     def initialize_gui(self):
         button_bg = "#4a7a8c"
         button_fg = "white"
-        button_font = ("helvetica",12,"bold")
+        button_font = ("Helvetica",12,"bold")
         self.hangman_canvas = tk.Canvas(self.master, width=300, height=300, bg="white")
         self.hangman_canvas.pack(pady=20)
     #incorporando whidgets de etiquetas para mostrar guiones con el numero de letras de la palabra secreta
@@ -29,7 +29,7 @@ class HangmanGame:
         self.word_display.pack(pady=(40,20))
             
         #Agregando botton de reinicio del juego a la interfaz grafica
-        self.reset_button = tk.Button(self.master, text="REINICIAR JUEGO", command=self.reset_game,width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
+        self.reset_button = tk.Button(self.master, text="Reset Game", command=self.reset_game, width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
         self.reset_button.pack(pady=(10, 0))
 
         #Agregando botones de letras del alfabeto y vinculandolos a un metodo de manejo de conjeturas
@@ -37,17 +37,15 @@ class HangmanGame:
         self.buttons_frame.pack(pady=20)#Widget de marco para agrupar los botones del alfabeto
         self.setup_alphabet_buttons() #botones para cada letra del alfabeto
 
-
-
-      #conexion de botones a la funcion guess_letter
+    #conexion de botones a la funcion guess_letter
     #para crear botones interactivos para cada letra del alfabeto.
     def setup_alphabet_buttons(self):
         #Personalizando la apariencia de los botones
         button_bg = "#4a7a8c"
         button_fg = "white"
-        button_font = ("helvetica",12,"bold")
+        button_font = ("helvetica",14,"bold")
 
-        alphabet = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         upper_row = alphabet[:13] #1ra mitad, fila superior
         lower_row = alphabet[13:] # 2da mitad, fila inferior
 
@@ -96,7 +94,7 @@ class HangmanGame:
         self.hangman_canvas.create_line(155, 130, 185, 150, fill="black")
 
     def draw_left_leg(self): 
-        self.hangman_canvas.create_line(155, 17050, 125, 200, fill="black")
+        self.hangman_canvas.create_line(155, 170, 125, 200, fill="black")
 
     def draw_right_leg(self): 
         self.hangman_canvas.create_line(155, 170, 185, 200, fill="black")
@@ -109,20 +107,20 @@ class HangmanGame:
         self.hangman_canvas.create_arc(140, 85, 170, 105, star=0, extent=-180, fill="black")
     
      #manejo de letras supuestas
-    def guess_letter(self,letter):
+    def guess_letter(self, letter):
         if letter in self.secret_word and letter not in self.correct_guesses:
             self.correct_guesses.add(letter)
         elif letter not in self.incorrect_guesses:
             self.incorrect_guesses.add(letter)
             self.attempts_left -= 1
-            self.update_hangman_canvas
+            self.update_hangman_canvas()
 
         self.update_word_display()
         self.check_game_over()
 
      #Actualizando la palabra mostrada, revelando cualquier letra adivinada
     def update_word_display(self):
-        displayed_word =" ".join([letter if letter in self.correct_guesses else "_" for letter in self.secret_word])
+        displayed_word = " ".join([letter if letter in self.correct_guesses else "_" for letter in self.secret_word])
         self.word_display.config(text=displayed_word)
     
     #chequea si el juego se gano o se perdio, mostrando un mensaje apropiado
@@ -133,7 +131,7 @@ class HangmanGame:
             self.display_game_over_message(f"Juego Terminado! La palabra secreta era: {self.secret_word}")
 
      #Agregando mensajes de fin del juego
-    def display_game_over_message(self,message):
+    def display_game_over_message(self, message):
         stylish_font = ("Arial", 18, "italic")
         button_bg = "#4a7a8c"
         button_fg = "white"
@@ -150,17 +148,14 @@ class HangmanGame:
         #Añadiendo un boton de reinicio del juego debajo del mensaje de fin del juego
         if not hasattr(self, 'restart_button'):
             self.restart_button = tk.Button(self.master, text="Restar Game", command=self.reset_game, width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
-            self.restart_button.pack(pady=(10, 20))
+        self.restart_button.pack(pady=(10, 20))
 
     #Metodo de reinicio del juego
     def reset_game(self):
-        self.secret_word = self.choose_secret_word
+        self.secret_word = self.choose_secret_word ()
         self.correct_guesses = set()
         self.incorrect_guesses = set()
         self.attempts_left = 7
-
-        
-
 
         self.hangman_canvas.delete("all")
         self.update_word_display()
@@ -168,21 +163,22 @@ class HangmanGame:
         for frame in self.buttons_frame.winfo_children():
             for button in frame.winfo_children():
                 button.configure(state=tk.NORMAL)
+        
         self.reset_button.pack(pady=(10, 0))
 
         if hasattr(self,'game_over_label') and self.game_over_label.winfo_exists():
             self.game_over_label.pack_forget()
-        if hasattr(self,'restart_button') and self.game_over_label.winfo_exists():
+        if hasattr(self,'restart_button') and self.restart_button.winfo_exists():
             self.restart_button.pack_forget()
 
-        self.buttons_frame.pack_forget()
+        self.buttons_frame.pack()
 
 #definicion de funcion para crear la ventana raiz de tkinter
 #e iniciar el bucle de eventos de tkinter
 def main():
-    root = tk.Tk()
+    root = tk.Tk()#ventana raiz
     game = HangmanGame(root)
-    root.mainloop()
+    root.mainloop() #bucle de eventos
 
 if __name__ == "__main__":
     main()
