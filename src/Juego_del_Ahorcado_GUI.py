@@ -21,15 +21,15 @@ class HangmanGame:
     def initialize_gui(self):
         button_bg = "#4a7a8c"
         button_fg = "white"
-        button_font = ("Helvetica",12,"bold")
+        button_font = ("Helvetica",20,"bold")
         self.hangman_canvas = tk.Canvas(self.master, width=300, height=300, bg="white")
         self.hangman_canvas.pack(pady=20)
     #incorporando whidgets de etiquetas para mostrar guiones con el numero de letras de la palabra secreta
-        self.word_display = tk.Label(self.master, text="_" * len(self.secret_word), font=("Helvetica",30), bg='light blue')
+        self.word_display = tk.Label(self.master, text= " _ " * len(self.secret_word), font=("Arial", 20), bg='light blue')
         self.word_display.pack(pady=(40,20))
             
         #Agregando botton de reinicio del juego a la interfaz grafica
-        self.reset_button = tk.Button(self.master, text="Reset Game", command=self.reset_game, width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
+        self.reset_button = tk.Button(self.master, text="Reiniciar Juego", command=self.reset_game, width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
         self.reset_button.pack(pady=(10, 0))
 
         #Agregando botones de letras del alfabeto y vinculandolos a un metodo de manejo de conjeturas
@@ -164,7 +164,7 @@ class HangmanGame:
             for button in frame.winfo_children():
                 button.configure(state=tk.NORMAL)
         
-        self.reset_button.pack(pady=(10, 0))
+        self.reset_button.pack(pady=(10, 10))
 
         if hasattr(self,'game_over_label') and self.game_over_label.winfo_exists():
             self.game_over_label.pack_forget()
@@ -176,9 +176,9 @@ class HangmanGame:
 #definicion de funcion para crear la ventana raiz de tkinter
 #e iniciar el bucle de eventos de tkinter
 def main():
-    root = tk.Tk()#ventana raiz
-    game = HangmanGame(root)
-    root.mainloop() #bucle de eventos
+    raiz = tk.Tk()#ventana raiz
+    game = HangmanGame(raiz)
+    raiz.mainloop() #bucle de eventos
 
 if __name__ == "__main__":
     main()
