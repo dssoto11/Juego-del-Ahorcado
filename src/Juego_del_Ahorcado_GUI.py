@@ -2,6 +2,7 @@
 import tkinter as tk
 import random
 
+
 class HangmanGame:
     def __init__(self,master):
         self.master = master
@@ -13,12 +14,14 @@ class HangmanGame:
         self.correct_guesses = set()
         self.incorrect_guesses = set()
         self.attempts_left = 7 
+        #self.master.iconbitmap('ahoracdo.ico')
         self.initialize_gui()
 
     
 
     #Creacion del lienzo hangman_canvas de 300x300 pix y fondo blanco   
     def initialize_gui(self):
+        
         button_bg = "#4a7a8c"
         button_fg = "white"
         button_font = ("Helvetica",20,"bold")
@@ -179,6 +182,7 @@ def main():
     raiz = tk.Tk()#ventana raiz
     game = HangmanGame(raiz)
     raiz.mainloop() #bucle de eventos
+    
 
 if __name__ == "__main__":
     main()
