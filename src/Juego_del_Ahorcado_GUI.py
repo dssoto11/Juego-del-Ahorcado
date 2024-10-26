@@ -88,7 +88,7 @@ class HangmanGame:
         self.hangman_canvas.create_oval(125, 50, 185, 110, outline="black")
 
     def draw_body(self): 
-        self.hangman_canvas.create_oval(155, 110, 155, 170, fill="black")
+        self.hangman_canvas.create_line(155, 110, 155, 170, fill="black")
 
     def draw_left_arm(self):
         self.hangman_canvas.create_line(155, 130, 125, 150, fill="black")

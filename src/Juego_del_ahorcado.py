@@ -1,41 +1,34 @@
-"""Archivo main del proyecto de Juego del Ahorcado """
-import random
+from tkinter import *
+import random as random
 
-#lista de palabras secretas
-word_list = ["python","hangman","programing","challenge"]
-#elegir una palabra aleatoriamente
-secret_world = random.choice(word_list)
-#inicializacion de sets para almacenar intentos correctos e incorrectos de adivinal letras
-correct_guesses = set()
-incorrect_guesses = set()
-#numero de intentos
-attempts_left = 6
+class JuegoDelAhorcado:
+    def __init__(self,ventana):
+        self.ventana = ventana
+        self.ventana.geometry('700x600')
+        self.ventana.title('JUEGO DEL AHORCADO')
+        self.ventana.configure(bg='yellow')
+        self.inicializar()
 
-#funcion del estado del juego
-def display_game_state():
-    displayed_word = "".join([letter if letter in correct_guesses else "_" for letter in secret_world ])
-    print(f"Word: {displayed_word}")
-    print(f"Incorrect guesses: {' '.join(incorrect_guesses)}")
-    print(f"Attemps left: {attempts_left}")
+    def inicializar(self):
+        self.ventana_secundaria()
 
-#bucle principal
-while True:
-    display_game_state()
-    guess = input("Enter your guess:").lower()
 
-    #chequeamos si la letra esta en la palabra secreta
-    if guess in secret_world:
-        correct_guesses.add(guess)
-        #chequeamos si ya ha ganado el juego
-        if set(secret_world).issubset(correct_guesses):
-            print("Felicidades! has adivinado la palabra")
-            break
+
+
+    def ventana_secundaria(self):
+        ventana2 = Frame(self.ventana,width=300,height=300,bg='white')
+        ventana2.pack(pady=40)
+
+
     
-    else:
-        incorrect_guesses.add(guess)
-        attempts_left -= 1
-        #Chequeamos si ya ha perdido
-        if attempts_left == 0:
-            print("Fin del juego!!!")
-            print(f"La palabra secreta era: {secret_world}")
-            break
+    
+
+
+def main():
+    root = Tk()
+    app = JuegoDelAhorcado(root)
+    root.mainloop()
+
+if __name__ == '__main__':
+    main()
+    
