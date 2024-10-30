@@ -1,5 +1,6 @@
 from tkinter import *
 import random as random
+import unicodedata
 
 class JuegoDelAhorcado:
     def __init__(self,ventana):
@@ -9,15 +10,31 @@ class JuegoDelAhorcado:
         self.ventana.configure(bg='yellow')
         self.intentos_correctos = set()
         self.intentos_incorrectos = set()
+        self.palabra_secreta  = self.elegir_palabra_secreta().upper().strip()
+        #self.palabra_secreta = unicodedata.normalize('NFKD', self.palabra_secreta).encode('ASCII', 'ignore')
+        
+
+        self.longitud = len(self.palabra_secreta)
+        print(self.longitud)
+        
         self.num_intentos_incorrectos = 7
         self.inicializar()
         self.botones_del_alfabeto()
 
+    def elegir_palabra_secreta(self):
+
+        filename = 'palabras.txt'
+        
+        with open(filename) as archivo_objeto:
+            lineas = archivo_objeto.readlines()
+        palabra_secreta = random.choice(lineas)
+        return palabra_secreta
+    
     def inicializar(self):
         self.ventana2 = Frame(self.ventana,width=300,height=300,bg='white')
         self.ventana2.pack(pady=20)
 
-        self.mostrar_palabra = Label(self.ventana,text="_" * (len(self.palabra_secreta())),font=('arial',20),bg='white')
+        self.mostrar_palabra = Label(self.ventana,text="_" * self.longitud,font=('arial',20),bg='white')
         self.mostrar_palabra.pack(pady=10)
 
     def botones_del_alfabeto(self):
@@ -43,19 +60,18 @@ class JuegoDelAhorcado:
       
         
     def adivinar_letra(self,letra):
-        self.letra = letra
-        if self.letra in self.palabra_secreta() and self.letra not in self.intentos_correctos:
-            self.intentos_correctos.add(self.letra)
-        elif self.letra not in self.intentos_incorrectos:
-            self.intentos_incorrectos.add(self.letra)
+        if letra in self.palabra_secreta and letra not in self.intentos_correctos:
+            self.intentos_correctos.add(letra)
+        elif letra not in self.intentos_incorrectos:
+            self.intentos_incorrectos.add(letra)
             self.num_intentos_incorrectos -= 1
-            self.actualizar_dibujo_ahorcado
+            #self.actualizar_dibujo_ahorcado ()
 
         self.actualizar_mostrar_palabra()
-        self.chequear_fin_juego ()
+        #self.chequear_fin_juego ()
     
     def actualizar_mostrar_palabra(self):
-        mostrar_palabra = " ".join([letra if letra in self.intentos_correctos else "_" for letra in self.intentos_incorrectos])
+        mostrar_palabra = " ".join([letra if letra in self.intentos_correctos else "_" for letra in self.palabra_secreta])
         self.mostrar_palabra.config(text=mostrar_palabra)        
        
 
@@ -65,12 +81,7 @@ class JuegoDelAhorcado:
 
 
 
-    def palabra_secreta(self):
-        filename = 'palabras.txt'
-        with open(filename) as archivo_objeto:
-            lineas = archivo_objeto.readlines()
-        palabra_secreta = random.choice(lineas)
-        return palabra_secreta
+    
         
               
 
