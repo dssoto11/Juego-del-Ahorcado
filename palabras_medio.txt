@@ -1,3 +1,4 @@
+'''
 Elefante
 Guitarra
 Computadora
@@ -18,3 +19,4 @@ Paralelepípedo
 Desoxirribonucleico
 Idiosincrasia
 Esparadrapo
+'''
