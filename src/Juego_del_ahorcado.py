@@ -7,7 +7,7 @@ from PIL import ImageTk, Image
 class JuegoDelAhorcado:
     def __init__(self,ventana):
         self.ventana = ventana
-        self.ventana.geometry('900x700')
+        self.ventana.geometry('1280x720')
         self.ventana.title('JUEGO DEL AHORCADO')
         self.ventana.configure(bg='yellow')
         self.intentos_correctos = set()
@@ -15,7 +15,6 @@ class JuegoDelAhorcado:
         self.palabra_secreta = self.elegir_palabra_secreta().upper().strip()
         #self.palabra_secreta = unicodedata.normalize('NFKD', self.palabra_secreta).encode('ASCII', 'ignore')
         
-
         self.longitud = len(self.palabra_secreta)
         print(self.longitud)
         

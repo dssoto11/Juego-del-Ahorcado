@@ -3,26 +3,25 @@ import random as random
 import unicodedata
 from PIL import ImageTk, Image
 
+root = Tk()
+root.title('imagen')
 
-class VentanaBienvenida:
-        def __init__(self,ventana):
-            self.ventana = ventana
-            #self.ventana.geometry('900x700')
-            self.ventana.title('JUEGO DEL AHORCADO')
-            
-            imagen = Image.open('ahorcado.png')
-            
-            #imagen = imagen.resize(200,200)
-            imagen_tk = ImageTk.PhotoImage(imagen)
-            bienvenida = Label(self.ventana,image=imagen_tk)
-            bienvenida.pack()
+imagen = Image.open('ahorcado2.png')
+imagen = ImageTk.PhotoImage(imagen)
+label1 = Label(image=imagen)
+label1.pack()
 
 
-def main():
-    root = Tk()
-    bienvenida = VentanaBienvenida(root)
-    root.mainloop()
+root.mainloop()
 
 
-if __name__ == '__main__':
-    main()
+
+
+
+
+
+
+
+
+
+
