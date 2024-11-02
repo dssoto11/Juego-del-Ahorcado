@@ -1,6 +1,8 @@
 from tkinter import *
 import random as random
 import unicodedata
+from PIL import ImageTk, Image
+
 
 class JuegoDelAhorcado:
     def __init__(self,ventana):
@@ -20,6 +22,8 @@ class JuegoDelAhorcado:
         self.num_intentos_incorrectos = 7
         self.inicializar()
         self.botones_del_alfabeto()
+        
+
 
     def elegir_palabra_secreta(self):
 
@@ -31,11 +35,14 @@ class JuegoDelAhorcado:
         return palabra_secreta
     
     def inicializar(self):
-        self.ventana2 = Frame(self.ventana,width=300,height=300,bg='white')
+              
+        self.ventana2 = Frame(self.ventana,width=300,height=300,bg='white',)
         self.ventana2.pack(pady=20)
 
         self.mostrar_palabra = Label(self.ventana,text="_" * self.longitud,font=('arial',20),bg='white')
         self.mostrar_palabra.pack(pady=10)
+
+
 
     def botones_del_alfabeto(self):
         alfabeto = 'ABCDEFGHIJKLMNÑOPQRSTUVXYZ'
