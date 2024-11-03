@@ -1,48 +1,77 @@
 from tkinter import *
 import random as random
-import unicodedata
 from PIL import ImageTk, Image
 
 
+
+  
 class JuegoDelAhorcado:
     def __init__(self,ventana):
         self.ventana = ventana
         self.ventana.geometry('1280x720')
         self.ventana.title('JUEGO DEL AHORCADO')
         self.ventana.configure(bg='yellow')
-        self.intentos_correctos = set()
-        self.intentos_incorrectos = set()
-        self.palabra_secreta = self.elegir_palabra_secreta().upper().strip()
-        #self.palabra_secreta = unicodedata.normalize('NFKD', self.palabra_secreta).encode('ASCII', 'ignore')
-        
-        self.longitud = len(self.palabra_secreta)
-        print(self.longitud)
-        
-        self.num_intentos_incorrectos = 7
         self.inicializar()
-        self.botones_del_alfabeto()
-        
-
-
-    def elegir_palabra_secreta(self):
-
-        filename = 'palabras_facil.txt'
-        
-        with open(filename) as archivo_objeto:
-            lineas = archivo_objeto.readlines()
-        palabra_secreta = random.choice(lineas)
-        return palabra_secreta
     
     def inicializar(self):
-              
-        self.ventana2 = Frame(self.ventana,width=300,height=300,bg='white',)
+        self.intentos_correctos = set()
+        self.intentos_incorrectos = set()     
+        self.num_intentos_incorrectos = 7
+        self.imagen()
+           
+
+    def imagen(self):
+        ima = Image.open('ahorcado2.png')
+        new_ima = ima.resize((900,506))
+        imagen = ImageTk.PhotoImage(new_ima)
+        self.label1 = Label(self.ventana, image=imagen)
+        self.label1.image = imagen
+        self.label1.pack()
+    
+        grado_dificultad = ['FACIL', 'MEDIO', 'DIFICIL']
+        
+        self.buttond_frame = Frame(self.ventana,bg='light blue')
+        self.buttond_frame.pack(pady=20)
+        for dificultad in grado_dificultad:
+            self.buttond = Button(self.buttond_frame, text=dificultad, command=lambda l=dificultad: self.elegir_dificultad(l),width=20, height=2)
+            self.buttond.pack(side='left', padx=10, pady=2)
+
+        
+
+
+    def elegir_dificultad(self,dificultad):
+        if dificultad == 'FACIL':
+            filename = 'palabras_facil.txt'
+
+        elif dificultad == 'MEDIO':
+            filename = 'palabras_medio.txt'
+            
+        elif dificultad == 'DIFICIL':
+            filename = 'palabras_dificil.txt'
+    
+        self.elegir_palabra_secreta(filename)
+
+    def elegir_palabra_secreta(self,filename):
+        with open(filename) as archivo_objeto:
+            lineas = archivo_objeto.readlines()
+            self.palabra_secreta = random.choice(lineas)
+            self.palabra_secreta.upper().strip() 
+            self.longitud = len(self.palabra_secreta) 
+            
+        self.label1.pack_forget()
+        self.buttond_frame.pack_forget()
+
+        self.ventana_dibujo()
+        
+
+    def ventana_dibujo (self):
+        self.ventana2 = Frame(self.ventana,width=300,height=300,bg='white')
         self.ventana2.pack(pady=20)
 
         self.mostrar_palabra = Label(self.ventana,text="_" * self.longitud,font=('arial',20),bg='white')
         self.mostrar_palabra.pack(pady=10)
-
-
-
+        
+        self.botones_del_alfabeto()
     def botones_del_alfabeto(self):
         alfabeto = 'ABCDEFGHIJKLMNÑOPQRSTUVXYZ'
         self.primera_mitad = alfabeto[:13]
@@ -64,7 +93,8 @@ class JuegoDelAhorcado:
             botton = Button(self.ventana_segunda_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font=('arial',18),fg='black',bg='light green')
             botton.pack(side='left',padx=2,pady=2)
       
-        
+
+
     def adivinar_letra(self,letra):
         if letra in self.palabra_secreta and letra not in self.intentos_correctos:
             self.intentos_correctos.add(letra)
@@ -95,10 +125,6 @@ class JuegoDelAhorcado:
         self.mensajes_fin_juego = Label(self.ventana,text=mensaje,fg= 'red',font=('Arial',30))
         self.mensajes_fin_juego.pack(pady=15)       
               
-
-
-
-
 
 def main():
     root = Tk()

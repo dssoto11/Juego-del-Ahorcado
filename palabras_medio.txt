@@ -1,4 +1,3 @@
-'''
 Elefante
 Guitarra
 Computadora
@@ -9,14 +8,7 @@ Caballo
 Jardín
 Avión
 Chocolate
-Esternocleidomastoideo
-Electroencefalografista
-Otorrinolaringólogo
 Ovoviviparo
-Metacrilato
-Ventrílocuo
-Paralelepípedo
-Desoxirribonucleico
-Idiosincrasia
 Esparadrapo
-'''
+Metacrilato
+Ventrilocuo
