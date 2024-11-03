@@ -54,8 +54,8 @@ class JuegoDelAhorcado:
     def elegir_palabra_secreta(self,filename):
         with open(filename) as archivo_objeto:
             lineas = archivo_objeto.readlines()
-            self.palabra_secreta = random.choice(lineas)
-            self.palabra_secreta.upper().strip() 
+            palabra_secreta = random.choice(lineas)
+            self.palabra_secreta = palabra_secreta.upper().strip() 
             self.longitud = len(self.palabra_secreta) 
             
         self.label1.pack_forget()
@@ -72,6 +72,7 @@ class JuegoDelAhorcado:
         self.mostrar_palabra.pack(pady=10)
         
         self.botones_del_alfabeto()
+
     def botones_del_alfabeto(self):
         alfabeto = 'ABCDEFGHIJKLMNÑOPQRSTUVXYZ'
         self.primera_mitad = alfabeto[:13]
@@ -115,7 +116,7 @@ class JuegoDelAhorcado:
         if set(self.palabra_secreta).issubset(self.intentos_correctos):
             self.mostrar_mensajes('FELICIDADES!, HA GANADO EL JUEGO')
         elif self.num_intentos_incorrectos == 0:
-            self.mostrar_mensajes('LO SENTIMOS!, HA CONSUMIDO TODOS LOS INTENTOS')
+            self.mostrar_mensajes(f'LO SENTIMOS!, HA CONSUMIDO TODOS LOS INTENTOS, LA PALABRA SECRETA ERA {self.palabra_secreta}')
 
 
     def mostrar_mensajes(self,mensaje):
