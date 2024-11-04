@@ -68,7 +68,7 @@ class HangmanGame:
 
         for letter in lower_row:
             button = tk.Button(lower_frame, text=letter, command=lambda l=letter: self.guess_letter(l),width=4, height=2, bg=button_bg, fg=button_fg, font=button_font)
-            button.pack(side="left", padx=2, pady=2)
+            button.pack(side='left', padx=2, pady=2)
 
     def choose_secret_word (self):
         return random.choice(self.word_list)
