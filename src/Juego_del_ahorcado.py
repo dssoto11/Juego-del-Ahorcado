@@ -18,15 +18,12 @@ class JuegoDelAhorcado:
     def inicializar(self):
         self.intentos_correctos = set()
         self.intentos_incorrectos = set()     
-        self.num_intentos_incorrectos = 7
+        self.num_intentos_incorrectos = 9
         self.imagen()
            
     def imagen(self):
         fuente = Font(family="Roboto Cn", size=30)
-
-
-
-        ima = Image.open('ahorcado2.png')
+        ima = Image.open('imagenes/ahorcado2.png')
         #new_ima = ima.resize((900,506))
         imagen = ImageTk.PhotoImage(ima)
         self.label1 = Label(self.ventana, image=imagen)
@@ -34,7 +31,6 @@ class JuegoDelAhorcado:
         self.label1.place(x=0,y=0)
     
         grado_dificultad = ['FACIL', 'MEDIO', 'DIFICIL']
-        
         self.elegirdif = Label(self.label1,text='Elija dificultad',fg='blue',font='Helvetica 80 bold').place(x= 400,y=500)
         
         margen=400
@@ -45,7 +41,7 @@ class JuegoDelAhorcado:
         
     def elegir_dificultad(self,dificultad):
         if dificultad == 'FACIL':
-            filename = 'palabras_facil.txt'
+            filename = 'documentos/palabras_facil.txt'
 
         elif dificultad == 'MEDIO':
             filename = 'palabras_medio.txt'
@@ -63,8 +59,6 @@ class JuegoDelAhorcado:
             self.longitud = len(self.palabra_secreta) 
             
         self.label1.place_forget()
-        #self.buttond_frame.pack_forget()
-
         self.ventana_dibujo()
         
 
@@ -107,7 +101,7 @@ class JuegoDelAhorcado:
         elif letra not in self.intentos_incorrectos:
             self.intentos_incorrectos.add(letra)
             self.num_intentos_incorrectos -= 1
-            #self.actualizar_dibujo_ahorcado ()
+            self.actualizar_dibujo_ahorcado()
 
         self.actualizar_mostrar_palabra()
         self.chequear_condicion_ganadora()
@@ -129,7 +123,81 @@ class JuegoDelAhorcado:
 
         self.mensajes_fin_juego = Label(self.ventana,text=mensaje,fg= 'red')
         self.mensajes_fin_juego.pack(pady=15)    
-              
+    def actualizar_dibujo_ahorcado(self):
+        
+        #dibujar = self.cabeza()
+        dibujar = [self.palo_vertical,self.palo_arriba,self.soga,self.cabeza,self.cuerpo,self.pie_izquierdo, self.pie_derecho,self.brazo_derecho,self.brazo_izquierdo]
+        for i in range(len(self.intentos_incorrectos)):
+            if i < len(self.intentos_incorrectos):
+              dibujar[i]()
+
+    def cabeza(self):
+        ima = Image.open('imagenes/cabeza.png')
+        new_ima = ima.resize((100,96))
+        imagen = ImageTk.PhotoImage(new_ima)
+        cabeza = Label(self.ventana2, image=imagen)
+        cabeza.image = imagen
+        cabeza.place(x=213,y=137)
+    def cuerpo (self):
+        ima = Image.open('imagenes/cuerpo.png')
+        #new_ima = ima.resize((100,96))
+        imagen = ImageTk.PhotoImage(ima)
+        cuerpo = Label(self.ventana2, image=imagen)
+        cuerpo.image = imagen
+        cuerpo.place(x=256.5,y=233)
+    def pie_izquierdo (self):
+        ima = Image.open('imagenes/pie_izquierdo.png')
+        #new_ima = ima.resize((100,96))
+        imagen = ImageTk.PhotoImage(ima)
+        pie_izquierdo = Label(self.ventana2, image=imagen)
+        pie_izquierdo.image = imagen
+        pie_izquierdo.place(x=180,y=310)
+    def pie_derecho (self):
+        ima = Image.open('imagenes/pie_derecho.png')
+        #new_ima = ima.resize((100,96))
+        imagen = ImageTk.PhotoImage(ima)
+        pie_derecho = Label(self.ventana2, image=imagen)
+        pie_derecho.image = imagen
+        pie_derecho.place(x=264,y=310)
+    def brazo_derecho (self):
+        ima = Image.open('imagenes/brazo_derecho.png')
+        new_ima = ima.resize((63,70))
+        imagen = ImageTk.PhotoImage(new_ima)
+        brazo_derecho = Label(self.ventana2, image=imagen)
+        brazo_derecho.image = imagen
+        brazo_derecho.place(x=264,y=233)
+    def brazo_izquierdo (self):
+        ima = Image.open('imagenes/brazo_izquierdo.png')
+        new_ima = ima.resize((63,70))
+        imagen = ImageTk.PhotoImage(new_ima)
+        brazo_izquierdo = Label(self.ventana2, image=imagen)
+        brazo_izquierdo.image = imagen
+        brazo_izquierdo.place(x=180,y=233)
+    def palo_vertical (self):
+        ima = Image.open('imagenes/palo_vertical.png')
+        new_ima = ima.resize((111,380))
+        imagen = ImageTk.PhotoImage(new_ima)
+        palo_vertical = Label(self.ventana2, image=imagen)
+        palo_vertical.image = imagen
+        palo_vertical.place(x=20,y=10)
+    def palo_arriba (self):
+        ima = Image.open('imagenes/palo_arriba.png')
+        #new_ima = ima.resize((100,96))
+        imagen = ImageTk.PhotoImage(ima)
+        palo_arriba = Label(self.ventana2, image=imagen)
+        palo_arriba.image = imagen
+        palo_arriba.place(x=37,y=20)
+    def soga (self):
+        ima = Image.open('imagenes/soga.png')
+        #new_ima = ima.resize((100,96))
+        imagen = ImageTk.PhotoImage(ima)
+        soga = Label(self.ventana2, image=imagen)
+        soga.image = imagen
+        soga.place(x=250,y=58)
+
+
+
+
 
 def main():
     root = Tk()
