@@ -9,12 +9,63 @@ from PIL import ImageTk, Image
 #Creando la clase principal del juego, donde se define las dimensiones de la ventana raiz del juego,
 #el titulo de la misma y el color de background de la misma
 class JuegoDelAhorcado:
-    def __init__(self):
+    def __init__(self,ventana):
+        self.ventana = ventana
+        self.ventana.geometry('1280x720')
+        self.ventana.title('JUEGO DEL AHORCADO')        
+        self.ventana.configure()
+        self.ventana.configure(bg='yellow')
+        self.inicializar()
+    
+    #Inicializacion de los sets donde almazenaremos las letras que corresponden tanto a los aciertos
+    #como a los desaciertos, asi como el maximo numero de intentos incorrectos que puede tener
+    def inicializar(self):
         self.intentos_correctos = set()
         self.intentos_incorrectos = set()     
         self.num_intentos_incorrectos = 9
-        self.ventana_dibujo()
+        self.imagen()
+    #Colocacion de la imagen de fondo de la ventana principal
+    def imagen(self):
+        fuente = Font(family="Roboto Cn", size=30)
+        ima = Image.open('imagenes/ahorcado3.png')
+        #new_ima = ima.resize((900,506))
+        imagen = ImageTk.PhotoImage(ima)
+        self.label1 = Label(self.ventana, image=imagen)
+        self.label1.image = imagen
+        self.label1.place(x=0,y=0)
+    #Creacion de los bonones para elegir el nivel de dificultad conque se desea jugar
+        grado_dificultad = ['FACIL', 'MEDIO', 'DIFICIL']
+        self.elegirdif = Label(self.label1,text='Elija dificultad',fg='blue',font='Helvetica 80 bold').place(x= 400,y=500)
+        
+        margen=400
+        for dificultad in grado_dificultad:
+            self.buttond = Button(self.label1, text=dificultad,width=20, height=5,justify=LEFT, command=lambda l=dificultad: self.elegir_dificultad(l),font=f'Helvetica 80 bold',bg='light green')
+            self.buttond.place(x=margen,y=580)
+            margen += 300
+    #Eleccion del archivo que posee las palabras secretas, segun el nivel de dificultad elegido
+    def elegir_dificultad(self,dificultad):
+        if dificultad == 'FACIL':
+            filename = 'documentos/palabras_facil.txt'
+
+
+        elif dificultad == 'MEDIO':
+            filename = 'palabras_medio.txt'
+            
+        elif dificultad == 'DIFICIL':
+            filename = 'palabras_dificil.txt'
     
+        self.elegir_palabra_secreta(filename)
+    #Eleccion de la palabra secreta
+    def elegir_palabra_secreta(self,filename):
+        with open(filename) as archivo_objeto:
+            lineas = archivo_objeto.readlines()
+            palabra_secreta = random.choice(lineas)
+            self.palabra_secreta = palabra_secreta.upper().strip() 
+            self.longitud = len(self.palabra_secreta) 
+            
+        self.label1.place_forget()
+        self.ventana_dibujo()
+        
     #Creacion de la ventana sobre la cual dibujaremos el hombre ahorcado
     def ventana_dibujo (self):
         self.ventana2 = Frame(self.ventana,width=400,height=400,bg='white')
@@ -82,6 +133,18 @@ class JuegoDelAhorcado:
     # vamos actualizando el dibujo del hombre ahorcado, segun el numero de intentos incorrectos
     def actualizar_dibujo_ahorcado_dificil(self):
         dibujar = [self.cuerpo,self.pie_izquierdo, self.pie_derecho,self.brazo_derecho,self.brazo_izquierdo,self.palo_vertical,self.palo_arriba,self.soga,self.cabeza]
+        for i in range(len(self.intentos_incorrectos)):
+            if i < len(self.intentos_incorrectos):
+              dibujar[i]()
+    
+    def actualizar_dibujo_ahorcado_medio(self):
+        dibujar = [self.pie_izquierdo, self.pie_derecho,self.brazo_derecho,self.brazo_izquierdo,self.cabeza,self.cuerpo,[self.palo_vertical,self.palo_arriba,self.soga]]
+        for i in range(len(self.intentos_incorrectos)):
+            if i < len(self.intentos_incorrectos):
+              dibujar[i]()
+
+    def actualizar_dibujo_ahorcado_facil(self):
+        dibujar = [self.cuerpo,self.pie_izquierdo, self.pie_derecho,self.brazo_derecho,self.brazo_izquierdo,[self.palo_vertical,self.palo_arriba,self.soga,self.cabeza]]
         for i in range(len(self.intentos_incorrectos)):
             if i < len(self.intentos_incorrectos):
               dibujar[i]()
@@ -158,4 +221,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
