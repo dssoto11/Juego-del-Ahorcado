@@ -2,6 +2,7 @@
 import tkinter as tk
 import random
 
+
 class HangmanGame:
     def __init__(self,master):
         self.master = master
@@ -13,23 +14,25 @@ class HangmanGame:
         self.correct_guesses = set()
         self.incorrect_guesses = set()
         self.attempts_left = 7 
+        #self.master.iconbitmap('ahoracdo.ico')
         self.initialize_gui()
 
     
 
     #Creacion del lienzo hangman_canvas de 300x300 pix y fondo blanco   
     def initialize_gui(self):
+        
         button_bg = "#4a7a8c"
         button_fg = "white"
-        button_font = ("Helvetica",12,"bold")
+        button_font = ("Helvetica",20,"bold")
         self.hangman_canvas = tk.Canvas(self.master, width=300, height=300, bg="white")
         self.hangman_canvas.pack(pady=20)
     #incorporando whidgets de etiquetas para mostrar guiones con el numero de letras de la palabra secreta
-        self.word_display = tk.Label(self.master, text="_" * len(self.secret_word), font=("Helvetica",30), bg='light blue')
+        self.word_display = tk.Label(self.master, text= " _ " * len(self.secret_word), font=("Arial", 20), bg='light blue')
         self.word_display.pack(pady=(40,20))
             
         #Agregando botton de reinicio del juego a la interfaz grafica
-        self.reset_button = tk.Button(self.master, text="Reset Game", command=self.reset_game, width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
+        self.reset_button = tk.Button(self.master, text="Reiniciar Juego", command=self.reset_game, width=20, height=2, bg=button_bg, fg=button_fg, font=button_font)
         self.reset_button.pack(pady=(10, 0))
 
         #Agregando botones de letras del alfabeto y vinculandolos a un metodo de manejo de conjeturas
@@ -65,7 +68,7 @@ class HangmanGame:
 
         for letter in lower_row:
             button = tk.Button(lower_frame, text=letter, command=lambda l=letter: self.guess_letter(l),width=4, height=2, bg=button_bg, fg=button_fg, font=button_font)
-            button.pack(side="left", padx=2, pady=2)
+            button.pack(side='left', padx=2, pady=2)
 
     def choose_secret_word (self):
         return random.choice(self.word_list)
@@ -85,7 +88,7 @@ class HangmanGame:
         self.hangman_canvas.create_oval(125, 50, 185, 110, outline="black")
 
     def draw_body(self): 
-        self.hangman_canvas.create_oval(155, 110, 155, 170, fill="black")
+        self.hangman_canvas.create_line(155, 110, 155, 170, fill="black")
 
     def draw_left_arm(self):
         self.hangman_canvas.create_line(155, 130, 125, 150, fill="black")
@@ -164,7 +167,7 @@ class HangmanGame:
             for button in frame.winfo_children():
                 button.configure(state=tk.NORMAL)
         
-        self.reset_button.pack(pady=(10, 0))
+        self.reset_button.pack(pady=(10, 10))
 
         if hasattr(self,'game_over_label') and self.game_over_label.winfo_exists():
             self.game_over_label.pack_forget()
@@ -176,9 +179,10 @@ class HangmanGame:
 #definicion de funcion para crear la ventana raiz de tkinter
 #e iniciar el bucle de eventos de tkinter
 def main():
-    root = tk.Tk()#ventana raiz
-    game = HangmanGame(root)
-    root.mainloop() #bucle de eventos
+    raiz = tk.Tk()#ventana raiz
+    game = HangmanGame(raiz)
+    raiz.mainloop() #bucle de eventos
+    
 
 if __name__ == "__main__":
     main()
