@@ -49,10 +49,10 @@ class JuegoDelAhorcado:
 
 
         elif dificultad == 'MEDIO':
-            filename = 'palabras_medio.txt'
+            filename = 'documentos/palabras_medio.txt'
             
         elif dificultad == 'DIFICIL':
-            filename = 'palabras_dificil.txt'
+            filename = 'documentos/palabras_dificil.txt'
     
         self.elegir_palabra_secreta(filename)
     #Eleccion de la palabra secreta
