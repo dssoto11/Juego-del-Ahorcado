@@ -5,17 +5,14 @@ from tkinter import *
 from tkinter.font import *
 import random as random
 from PIL import ImageTk, Image
-from Juego_del_ahorcado import JuegoDelAhorcado
+import Juego_del_ahorcado_dificil as ja
 
 #Creando la clase principal del juego, donde se define las dimensiones de la ventana raiz del juego,
 #el titulo de la misma y el color de background de la misma
 class Juego:
     def __init__(self,ventana):
         self.ventana = ventana
-        self.ventana.geometry('1280x720')
-        self.ventana.title('JUEGO DEL AHORCADO')        
-        self.ventana.configure()
-        self.ventana.configure(bg='yellow')
+        self.ventana.geometry('1280x720')      
         self.imagen()
 
     #Colocacion de la imagen de fondo de la ventana principal
@@ -37,16 +34,18 @@ class Juego:
     #Eleccion del archivo que posee las palabras secretas, segun el nivel de dificultad elegido
     def elegir_dificultad(self,dificultad):
         if dificultad == 'FACIL':
-            pass
+            self.label1.place_forget()
+            ja.JuegoDelAhorcado(self.ventana)
 
         elif dificultad == 'MEDIO':
-            pass
+            self.label1.place_forget()
+            ja.JuegoDelAhorcado(self.ventana)
             
         elif dificultad == 'DIFICIL':
-            self.imagen.place_forget()
-            JuegoDelAhorcado(self.ventana)
+            self.label1.place_forget()
+            ja.JuegoDelAhorcado(self.ventana)
             
-    
+        
 
 def main():
     root = Tk()

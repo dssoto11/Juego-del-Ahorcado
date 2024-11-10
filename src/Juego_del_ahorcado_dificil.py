@@ -9,19 +9,36 @@ from PIL import ImageTk, Image
 #Creando la clase principal del juego, donde se define las dimensiones de la ventana raiz del juego,
 #el titulo de la misma y el color de background de la misma
 class JuegoDelAhorcado:
-    def __init__(self):
+    def __init__(self,ventana):
+        self.ventana = ventana
+        self.ventana.geometry('1280x720')
+        self.ventana.title('JUEGO DEL AHORCADO')        
+        self.ventana.configure()
+        self.ventana.configure(bg='yellow')
         self.intentos_correctos = set()
         self.intentos_incorrectos = set()     
         self.num_intentos_incorrectos = 9
-        self.ventana_dibujo()
+        self.elegir_palabra_secreta()
     
-    #Creacion de la ventana sobre la cual dibujaremos el hombre ahorcado
+    def elegir_palabra_secreta(self):
+        filename = 'documentos/palabras_dificil.txt'
+        with open(filename) as archivo_objeto:
+            lineas = archivo_objeto.readlines()
+            palabra_secreta = random.choice(lineas)
+            self.palabra_secreta = palabra_secreta.upper().strip() 
+            self.longitud = len(self.palabra_secreta) 
+        self.ventana_dibujo()
+
+     #Creacion de la ventana sobre la cual dibujaremos el hombre ahorcado
     def ventana_dibujo (self):
         self.ventana2 = Frame(self.ventana,width=400,height=400,bg='white')
         self.ventana2.pack(pady=20)
     #Mostrar la palabra secreta con guiones
         self.mostrar_palabra = Label(self.ventana,text=" _ " * self.longitud,font=('arial',30),bg='white')
         self.mostrar_palabra.pack(pady=10)
+
+        self.boton_reinicio = Button(self.ventana,text='REINICIAR',command=self.reiniciar, width=10, height=2,fg='red',bg='light green')
+        self.boton_reinicio.pack(pady=10)
         
         self.botones_del_alfabeto()
     #creacion de los botones con todas las letras del alfabeto, para ir eligiendo las letras 
@@ -78,6 +95,7 @@ class JuegoDelAhorcado:
         self.ventana_botones_alfabeto.pack_forget() # quitar botones del alfabero para mostrar mensajes
         self.mensajes_fin_juego = Label(self.ventana,text=mensaje,fg= 'red')
         self.mensajes_fin_juego.pack(pady=15)
+
 
     # vamos actualizando el dibujo del hombre ahorcado, segun el numero de intentos incorrectos
     def actualizar_dibujo_ahorcado_dificil(self):
@@ -146,10 +164,18 @@ class JuegoDelAhorcado:
         soga = Label(self.ventana2, image=imagen)
         soga.image = imagen
         soga.place(x=250,y=58)
+    
 
+    def reiniciar (self):
+        self.intentos_correctos = set()
+        self.intentos_incorrectos = set()     
+        self.num_intentos_incorrectos = 9
+        
+        self.ventana2.pack_forget()
+        self.elegir_palabra_secreta()
+        self.actualizar_mostrar_palabra()
 
-
- 
+        #self.ventana2.delete ('all')
 
 def main():
     root = Tk()
