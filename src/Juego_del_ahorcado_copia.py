@@ -11,7 +11,7 @@ from PIL import ImageTk, Image
 class JuegoDelAhorcado:
     def __init__(self,ventana):
         self.ventana = ventana
-        self.ventana.geometry('1280x720')
+        self.ventana.geometry('1400x900')
         self.ventana.title('JUEGO DEL AHORCADO')        
         self.ventana.configure()
         self.ventana.configure(bg='yellow')
@@ -73,6 +73,9 @@ class JuegoDelAhorcado:
     #Mostrar la palabra secreta con guiones
         self.mostrar_palabra = Label(self.ventana,text=" _ " * self.longitud,font=('arial',30),bg='white')
         self.mostrar_palabra.pack(pady=10)
+        
+        self.boton_reinicio = Button(self.ventana,text='REINICIAR',command=self.reiniciar, width=10, height=2,fg='red',bg='light green')
+        self.boton_reinicio.pack(pady=10)
         
         self.botones_del_alfabeto()
     #creacion de los botones con todas las letras del alfabeto, para ir eligiendo las letras 
@@ -136,7 +139,7 @@ class JuegoDelAhorcado:
         for i in range(len(self.intentos_incorrectos)):
             if i < len(self.intentos_incorrectos):
               dibujar[i]()
-    
+    """
     def actualizar_dibujo_ahorcado_medio(self):
         dibujar = [self.pie_izquierdo, self.pie_derecho,self.brazo_derecho,self.brazo_izquierdo,self.cabeza,self.cuerpo,[self.palo_vertical,self.palo_arriba,self.soga]]
         for i in range(len(self.intentos_incorrectos)):
@@ -148,7 +151,7 @@ class JuegoDelAhorcado:
         for i in range(len(self.intentos_incorrectos)):
             if i < len(self.intentos_incorrectos):
               dibujar[i]()
-
+    """
     #mostramos la foto de cada parte del hombre ahorcado 
     def cabeza(self):
         ima = Image.open('imagenes/cabeza.png')
@@ -209,6 +212,20 @@ class JuegoDelAhorcado:
         soga = Label(self.ventana2, image=imagen)
         soga.image = imagen
         soga.place(x=250,y=58)
+
+    def reiniciar (self):
+        self.intentos_correctos = set()
+        self.intentos_incorrectos = set()     
+        self.num_intentos_incorrectos = 9
+        self.mostrar_palabra.pack_forget()
+        self.actualizar_dibujo_ahorcado_dificil()
+        self.inicializar()
+        self.ventana_botones_alfabeto.pack_forget()
+        self.ventana2.pack_forget()
+        self.boton_reinicio.pack_forget()
+        self.mensajes_fin_juego.pack_forget()
+
+    
 
 
 
