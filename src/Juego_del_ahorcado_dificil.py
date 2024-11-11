@@ -171,7 +171,6 @@ class JuegoDelAhorcado:
 
     def reiniciar (self):
         m.Juego(self.ventana)
-
         self.mostrar_palabra.pack_forget()
         self.ventana_botones_alfabeto.pack_forget()
         self.ventana2.pack_forget()
