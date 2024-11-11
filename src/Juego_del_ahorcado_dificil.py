@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter.font import *
 import random as random
 from PIL import ImageTk, Image
+import main as m
 
 #Creando la clase principal del juego, donde se define las dimensiones de la ventana raiz del juego,
 #el titulo de la misma y el color de background de la misma
@@ -15,6 +16,9 @@ class JuegoDelAhorcado:
         self.ventana.title('JUEGO DEL AHORCADO')        
         self.ventana.configure()
         self.ventana.configure(bg='yellow')
+        self.inicializar()
+
+    def inicializar (self):
         self.intentos_correctos = set()
         self.intentos_incorrectos = set()     
         self.num_intentos_incorrectos = 9
@@ -69,7 +73,6 @@ class JuegoDelAhorcado:
     def adivinar_letra(self,letra):
         if letra in self.palabra_secreta and letra not in self.intentos_correctos:
             self.intentos_correctos.add(letra)
-            print(self.intentos_correctos)
         elif letra not in self.intentos_incorrectos:
             self.intentos_incorrectos.add(letra)
             self.num_intentos_incorrectos -= 1
@@ -167,15 +170,17 @@ class JuegoDelAhorcado:
     
 
     def reiniciar (self):
-        self.intentos_correctos = set()
-        self.intentos_incorrectos = set()     
-        self.num_intentos_incorrectos = 9
-        
+        m.Juego(self.ventana)
+        self.mostrar_palabra.pack_forget()
+        self.ventana_botones_alfabeto.pack_forget()
         self.ventana2.pack_forget()
-        self.elegir_palabra_secreta()
-        self.actualizar_mostrar_palabra()
+        self.boton_reinicio.pack_forget()
+        self.mensajes_fin_juego.pack_forget()
+        
+        
+        
 
-        #self.ventana2.delete ('all')
+        
 
 def main():
     root = Tk()
