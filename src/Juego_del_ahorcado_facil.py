@@ -38,10 +38,10 @@ class JuegoDelAhorcado:
         self.ventana2 = Frame(self.ventana,width=400,height=400,bg='white')
         self.ventana2.pack(pady=20)
     #Mostrar la palabra secreta con guiones
-        self.mostrar_palabra = Label(self.ventana,text=" _ " * self.longitud,font=('arial',30),bg='white')
+        self.mostrar_palabra = Label(self.ventana,text=" _ " * self.longitud,font=("Arial",25), bg='white')
         self.mostrar_palabra.pack(pady=10)
 
-        self.boton_reinicio = Button(self.ventana,text='REINICIAR',command=self.reiniciar, width=10, height=2,fg='red',bg='light green')
+        self.boton_reinicio = Button(self.ventana,text='REINICIAR',command=self.reiniciar, width=10, height=2,fg='red',bg='light green',font="consolas 18 bold")
         self.boton_reinicio.pack(pady=10)
         
         self.botones_del_alfabeto()
@@ -60,12 +60,12 @@ class JuegoDelAhorcado:
         self.ventana_segunda_mitad.pack()
 
         for letra in self.primera_mitad:
-            botton = Button(self.ventana_primera_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font=('arial',18),fg='black',bg='light green')
-            botton.pack(side='left',padx=2,pady=2)
+            self.botton = Button(self.ventana_primera_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font="consolas 18 bold",fg='black',bg='light green')
+            self.botton.pack(side='left',padx=2,pady=2)
 
         for letra in self.segunda_mitad:
-            botton = Button(self.ventana_segunda_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font=('arial',18),fg='black',bg='light green')
-            botton.pack(side='left',padx=2,pady=2)
+            self.botton = Button(self.ventana_segunda_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font="consolas 18 bold",fg='black',bg='light green')
+            self.botton.pack(side='left',padx=2,pady=2)
       
 
     #Comparacion de las letras elegidas con la palabra secreta, almazenamos en los sets de intentos correctos
@@ -73,6 +73,9 @@ class JuegoDelAhorcado:
     def adivinar_letra(self,letra):
         if letra in self.palabra_secreta and letra not in self.intentos_correctos:
             self.intentos_correctos.add(letra)
+            if hasattr(self,letra) and self.botton.winfo_exists():
+                self.botton.configure(state=DISABLED)
+                    
         elif letra not in self.intentos_incorrectos:
             self.intentos_incorrectos.add(letra)
             self.num_intentos_incorrectos -= 1
