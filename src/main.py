@@ -26,7 +26,7 @@ class Juego:
         self.label1.place(x=0,y=0)
     #Creacion de los bonones para elegir el nivel de dificultad conque se desea jugar
         grado_dificultad = ['FACIL', 'MEDIO', 'DIFICIL']
-        self.elegirdif = Label(self.label1,text='Elija dificultad',fg='blue',font='Helvetica 80 bold').place(x= 400,y=500)
+        self.elegirdif = Label(self.label1,text='Elija dificultad',fg='blue',font="consolas 18 bold").place(x= 400,y=500)
         
         margen=400
         for dificultad in grado_dificultad:
