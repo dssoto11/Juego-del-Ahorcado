@@ -2,7 +2,7 @@
 una interfaz grafica
 """
 from tkinter import *
-from tkinter.font import *
+from tkinter import font
 import random as random
 from PIL import ImageTk, Image
 import main as m
@@ -41,7 +41,7 @@ class JuegoDelAhorcado:
         self.mostrar_palabra = Label(self.ventana,text=" _ " * self.longitud,font=("Arial",25), bg='white')
         self.mostrar_palabra.pack(pady=10)
 
-        self.boton_reinicio = Button(self.ventana,text='REINICIAR',command=self.reiniciar, width=10, height=2,fg='red',bg='light green',font="consolas 18 bold")
+        self.boton_reinicio = Button(self.ventana,text='REINICIAR',command=self.reiniciar,font="italic", width=10, height=2,fg='red',bg='light green')
         self.boton_reinicio.pack(pady=10)
         
         self.botones_del_alfabeto()
@@ -60,12 +60,12 @@ class JuegoDelAhorcado:
         self.ventana_segunda_mitad.pack()
 
         for letra in self.primera_mitad:
-            self.botton = Button(self.ventana_primera_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font="consolas 18 bold",fg='black',bg='light green')
-            self.botton.pack(side='left',padx=2,pady=2)
+            self.botton_letra = Button(self.ventana_primera_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font="consolas 18 bold",fg='black',bg='light green')
+            self.botton_letra.pack(side='left',padx=2,pady=2)
 
         for letra in self.segunda_mitad:
-            self.botton = Button(self.ventana_segunda_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font="consolas 18 bold",fg='black',bg='light green')
-            self.botton.pack(side='left',padx=2,pady=2)
+            self.botton_letra= Button(self.ventana_segunda_mitad, text=letra, command=lambda l=letra: self.adivinar_letra(l), width=6, height=3,font="consolas 18 bold",fg='black',bg='light green')
+            self.botton_letra.pack(side='left',padx=2,pady=2)
       
 
     #Comparacion de las letras elegidas con la palabra secreta, almazenamos en los sets de intentos correctos
@@ -73,8 +73,8 @@ class JuegoDelAhorcado:
     def adivinar_letra(self,letra):
         if letra in self.palabra_secreta and letra not in self.intentos_correctos:
             self.intentos_correctos.add(letra)
-            if hasattr(self,letra) and self.botton.winfo_exists():
-                self.botton.configure(state=DISABLED)
+            if letra in self.intentos_correctos:
+                self.botton_letra.configure(state=DISABLED)
                     
         elif letra not in self.intentos_incorrectos:
             self.intentos_incorrectos.add(letra)
@@ -99,7 +99,7 @@ class JuegoDelAhorcado:
     # y mostramos el mensaje correspondiente en cada caso
     def mostrar_mensajes(self,mensaje):
         self.ventana_botones_alfabeto.pack_forget() # quitar botones del alfabero para mostrar mensajes
-        self.mensajes_fin_juego = Label(self.ventana,text=mensaje,fg= 'red')
+        self.mensajes_fin_juego = Label(self.ventana,text=mensaje,fg= 'black',bg="light blue",font=("Segoe Script",20))
         self.mensajes_fin_juego.pack(pady=15)
 
 
