@@ -1,9 +1,10 @@
-import random as random
+from tkinter import *
 
-palabras_secretas = []
-filename = 'palabras.txt'
-with open(filename) as archivo_objeto:
-    lineas = archivo_objeto.readlines()
+win = Tk()
+win.geometry("300x300")
 
-palabras_secreta = random.choice(lineas)
-print (palabras_secreta) 
+title_label = Label(win, text="hello", font= ('italic',20))
+title_label.pack(pady=10)
+
+
+win.mainloop()
