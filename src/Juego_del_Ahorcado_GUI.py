@@ -135,7 +135,7 @@ class HangmanGame:
 
      #Agregando mensajes de fin del juego
     def display_game_over_message(self, message):
-        stylish_font = ("Arial", 18, "italic")
+        stylish_font = ("Arial 18 italic")
         button_bg = "#4a7a8c"
         button_fg = "white"
         button_font = ("helvetica",12,"bold")

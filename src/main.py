@@ -2,16 +2,23 @@
 una interfaz grafica
 """
 from tkinter import *
-from tkinter.font import *
+from tkinter import font
 import random as random
 from PIL import ImageTk, Image
-import Juego_del_ahorcado_dificil as ja
+import Juego_del_ahorcado_dificil as jd
+import Juego_del_ahorcado_facil as jf
+import Juego_del_ahorcado_medio as jm
 
 #Creando la clase principal del juego, donde se define las dimensiones de la ventana raiz del juego,
 #el titulo de la misma y el color de background de la misma
 class Juego:
     def __init__(self,ventana):
         self.ventana = ventana
+        self.defaultFont = font.nametofont("TkDefaultFont") 
+        # Overriding default-font with custom settings 
+        # i.e changing font-family, size and weight 
+        self.defaultFont.configure(family="ALiberationSans-Italic", size=19, weight=font.BOLD)
+
         self.ventana.geometry('1280x720')      
         self.imagen()
 
@@ -24,26 +31,26 @@ class Juego:
         self.label1.place(x=0,y=0)
     #Creacion de los bonones para elegir el nivel de dificultad conque se desea jugar
         grado_dificultad = ['FACIL', 'MEDIO', 'DIFICIL']
-        self.elegirdif = Label(self.label1,text='Elija dificultad',fg='blue',font='Helvetica 80 bold').place(x= 400,y=500)
+        self.elegirdif = Label(self.label1,text='Elija dificultad',font=("LiberationSans-Italic" ,40)).place(x= 400,y=500)
         
         margen=400
         for dificultad in grado_dificultad:
-            self.buttond = Button(self.label1, text=dificultad,width=20, height=5,justify=LEFT, command=lambda l=dificultad: self.elegir_dificultad(l),font=f'Helvetica 80 bold',bg='light green')
+            self.buttond = Button(self.label1, text=dificultad,width=20, height=5, command=lambda l=dificultad: self.elegir_dificultad(l),font=f'Helvetica 80 bold',bg='light green')
             self.buttond.place(x=margen,y=580)
             margen += 300
     #Eleccion del archivo que posee las palabras secretas, segun el nivel de dificultad elegido
     def elegir_dificultad(self,dificultad):
         if dificultad == 'FACIL':
             self.label1.place_forget()
-            ja.JuegoDelAhorcado(self.ventana)
+            jf.JuegoDelAhorcado(self.ventana)
 
         elif dificultad == 'MEDIO':
             self.label1.place_forget()
-            ja.JuegoDelAhorcado(self.ventana)
+            jm.JuegoDelAhorcado(self.ventana)
             
         elif dificultad == 'DIFICIL':
             self.label1.place_forget()
-            ja.JuegoDelAhorcado(self.ventana)
+            jd.JuegoDelAhorcado(self.ventana)
             
         
 
